@@ -23,6 +23,7 @@ de bienvenida programada, utilizando componentes electrónicos básicos.
 - 4 Pulsadores (push buttons)
 - Mini protoboard
 - Cables macho-hembra / hembra-hembra
+- Resistencias (si corresponde a los pulsadores)
 
 ## ⚙️ Funcionamiento
 
@@ -30,15 +31,6 @@ de bienvenida programada, utilizando componentes electrónicos básicos.
 2. Cada uno de los 4 pulsadores está asociado a una nota musical (Do, Re, Mi, Fa).
 3. Al presionar un pulsador, el buzzer emite la frecuencia correspondiente 
    a esa nota mediante la función `tone()` de Arduino.
-
-
-## 🚀 Cómo usarlo
-
-1. Cloná este repositorio.
-2. Abrí el archivo `.ino` en el IDE de Arduino.
-3. Conectá tu Arduino Uno por USB.
-4. Subí el código a la placa.
-5. ¡Listo! Presioná los pulsadores para tocar las notas.
 
 ## 📂 Material adicional
 
@@ -51,6 +43,29 @@ con videos e imágenes del proyecto en funcionamiento, incluyendo:
 📥 **Para visualizarlos:** descargá el archivo comprimido del repositorio 
 y extraelo en tu computadora con un programa como WinRAR, 7-Zip o el 
 descompresor nativo de tu sistema operativo.
+
+## 📄 Documentación
+
+Este repositorio incluye también la documentación completa del proyecto 
+en formato PDF/Word, donde se detalla:
+
+- Justificación del problema y la solución
+- Objetivos del proyecto
+- Componentes utilizados y su función
+- Diagrama de conexiones
+- Código comentado
+- Conclusiones
+
+📥 **Para visualizarla:** descargá el archivo de documentación 
+ubicado en la carpeta `documentacion/` del repositorio.
+
+## 🚀 Cómo usarlo
+
+1. Cloná este repositorio.
+2. Abrí el archivo `.ino` en el IDE de Arduino.
+3. Conectá tu Arduino Uno por USB.
+4. Subí el código a la placa.
+5. ¡Listo! Presioná los pulsadores para tocar las notas.
 
 ## 📌 Estado del proyecto
 
