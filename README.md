@@ -1,1 +1,49 @@
-# proyecto-de-tecnologia
+# 🎹 Piano Electrónico con Arduino
+
+Prototipo de piano electrónico desarrollado con Arduino, capaz de reproducir 
+4 notas musicales (Do-Re-Mi-Fa) mediante pulsadores, e incluye una melodía 
+de bienvenida al encender el sistema.
+
+## 📋 Descripción
+
+Este proyecto busca ofrecer una herramienta simple y económica para la 
+introducción a conceptos musicales básicos, simulando el funcionamiento 
+de un teclado mediante un microcontrolador Arduino y un buzzer.
+
+## 🎯 Objetivo
+
+Desarrollar un prototipo funcional que permita generar notas musicales 
+(Do-Re-Mi-Fa) a través de pulsadores individuales, junto con una secuencia 
+de bienvenida programada, utilizando componentes electrónicos básicos.
+
+## 🛠️ Componentes utilizados
+
+- Arduino Uno
+- Buzzer (2 pines)
+- 4 Pulsadores (push buttons)
+- Mini protoboard
+- Cables macho-hembra / hembra-hembra
+
+## ⚙️ Funcionamiento
+
+1. Al encender el circuito, el buzzer reproduce una melodía de bienvenida.
+2. Cada uno de los 4 pulsadores está asociado a una nota musical (Do, Re, Mi, Fa).
+3. Al presionar un pulsador, el buzzer emite la frecuencia correspondiente 
+   a esa nota mediante la función `tone()` de Arduino.
+
+
+## 🚀 Cómo usarlo
+
+1. Cloná este repositorio.
+2. Abrí el archivo `.ino` en el IDE de Arduino.
+3. Conectá tu Arduino Uno por USB.
+4. Subí el código a la placa.
+5. ¡Listo! Presioná los pulsadores para tocar las notas.
+
+## 📌 Estado del proyecto
+
+🚧 En desarrollo
+
+## 👤 Autor
+
+Garcia Thomas, Racana Esteban
