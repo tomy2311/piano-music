@@ -70,7 +70,7 @@ ubicado en la carpeta `documentacion/` del repositorio.
 
 ## 📌 Estado del proyecto
 
-🚧 En desarrollo
+Completado
 
 ## 👤 Autores
 
