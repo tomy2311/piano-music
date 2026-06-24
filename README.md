@@ -40,6 +40,18 @@ de bienvenida programada, utilizando componentes electrónicos básicos.
 4. Subí el código a la placa.
 5. ¡Listo! Presioná los pulsadores para tocar las notas.
 
+## 📂 Material adicional
+
+En este repositorio vas a encontrar un archivo comprimido (`.zip` o `.rar`) 
+con videos e imágenes del proyecto en funcionamiento, incluyendo:
+
+- Fotos del circuito armado
+- Video de demostración del piano funcionando
+
+📥 **Para visualizarlos:** descargá el archivo comprimido del repositorio 
+y extraelo en tu computadora con un programa como WinRAR, 7-Zip o el 
+descompresor nativo de tu sistema operativo.
+
 ## 📌 Estado del proyecto
 
 🚧 En desarrollo
