@@ -54,7 +54,8 @@ en formato PDF/Word, donde se detalla:
 - Componentes utilizados y su función
 - Diagrama de conexiones
 - Código comentado
-- Conclusiones
+- Proceso de Armado
+- Diagrama del Flujo de codigo
 
 📥 **Para visualizarla:** descargá el archivo de documentación 
 ubicado en la carpeta `documentacion/` del repositorio.
