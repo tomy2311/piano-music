@@ -75,3 +75,5 @@ ubicado en la carpeta `documentacion/` del repositorio.
 ## 👤 Autores
 
 Garcia Thomas, Racana Esteban
+
+Proyecto sin fines lucrativos.
