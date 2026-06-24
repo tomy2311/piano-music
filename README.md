@@ -56,6 +56,6 @@ descompresor nativo de tu sistema operativo.
 
 🚧 En desarrollo
 
-## 👤 Autor
+## 👤 Autores
 
 Garcia Thomas, Racana Esteban
