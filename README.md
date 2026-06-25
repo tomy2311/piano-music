@@ -73,10 +73,10 @@ ubicado en la carpeta `documentacion/` del repositorio.
 Completado
 
 ## 📌 About
-Piano electronico con
-Arduino Uno:
-4 notas ( Do - Re - Mi - Fa ) mediante pulsadores
-y melodia de bienvenida
+Piano electronico con   
+Arduino Uno:   
+4 notas ( Do - Re - Mi - Fa ) mediante pulsadores   
+y melodia de bienvenida   
 
 ## 👤 Autores
 
