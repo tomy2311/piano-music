@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piano Arduino — Bitácora de notas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --fondo: #1c1712;
+    --fondo-panel: #241d16;
+    --marfil: #f2ead9;
+    --marfil-tenue: #cabfa8;
+    --laton: #c79a45;
+    --laton-suave: #e3c583;
+    --caoba: #8c3b32;
+    --linea: #3a2f22;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at top, #2a2117 0%, var(--fondo) 55%);
+    color:var(--marfil);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    padding:48px 24px 80px;
+  }
+  .contenedor{max-width:880px; margin:0 auto;}
+
+  header{margin-bottom:40px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--laton);
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Playfair Display', serif;
+    font-size:42px;
+    line-height:1.1;
+    margin:0 0 12px;
+    color:var(--marfil);
+  }
+  .subt{color:var(--marfil-tenue); font-size:15px; max-width:520px; line-height:1.5;}
+
+  /* --- Teclado (elemento firma) --- */
+  .teclado{
+    display:flex;
+    gap:6px;
+    margin:36px 0 44px;
+    height:120px;
+  }
+  .tecla{
+    flex:1;
+    background:var(--fondo-panel);
+    border:1px solid var(--linea);
+    border-radius:0 0 8px 8px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding-bottom:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--marfil-tenue);
+    transition: background .5s ease, box-shadow .5s ease, color .5s ease;
+  }
+  .tecla.activa{
+    background: linear-gradient(180deg, var(--laton-suave), var(--laton));
+    color:#241d16;
+    box-shadow: 0 0 24px rgba(199,154,69,.55);
+    font-weight:600;
+  }
+
+  /* --- Estado / conexión --- */
+  .estado{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--marfil-tenue);
+    margin-bottom:28px;
+  }
+  .punto{width:8px; height:8px; border-radius:50%; background:var(--caoba);}
+  .punto.ok{background:#7fae6b;}
+
+  /* --- Resumen --- */
+  .resumen{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:1px;
+    background:var(--linea);
+    border:1px solid var(--linea);
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:40px;
+  }
+  .resumen-item{
+    background:var(--fondo-panel);
+    padding:18px 14px;
+    text-align:center;
+  }
+  .resumen-item .n{
+    font-family:'Playfair Display', serif;
+    font-size:28px;
+    color:var(--laton-suave);
+  }
+  .resumen-item .l{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    color:var(--marfil-tenue);
+    margin-top:4px;
+  }
+
+  /* --- Bitácora / historial --- */
+  h2{
+    font-family:'Playfair Display', serif;
+    font-size:20px;
+    font-weight:600;
+    color:var(--marfil);
+    margin:0 0 4px;
+  }
+  .h2-sub{color:var(--marfil-tenue); font-size:13px; margin-bottom:18px;}
+
+  .ledger{border-top:1px solid var(--linea);}
+  .fila{
+    display:grid;
+    grid-template-columns: 70px 1fr 180px;
+    gap:16px;
+    align-items:center;
+    padding:14px 6px;
+    border-bottom:1px solid var(--linea);
+    font-size:14px;
+  }
+  .fila .nota-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    color:var(--laton-suave);
+  }
+  .fila .fecha{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--marfil-tenue);
+    text-align:right;
+  }
+  .vacio{
+    padding:40px 6px;
+    text-align:center;
+    color:var(--marfil-tenue);
+    font-size:14px;
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header>
+    <div class="eyebrow">Persistencia · Piano Arduino</div>
+    <h1>Bitácora de notas tocadas</h1>
+    <p class="subt">Cada vez que se presiona una tecla en el piano físico, la nota
+      viaja del Arduino a esta base de datos. Acá queda el registro permanente.</p>
+  </header>
+
+  <div class="estado">
+    <span class="punto" id="puntoEstado"></span>
+    <span id="textoEstado">Conectando con la API…</span>
+  </div>
+
+  <div class="teclado" id="teclado">
+    <div class="tecla" data-nota="DO">DO</div>
+    <div class="tecla" data-nota="RE">RE</div>
+    <div class="tecla" data-nota="MI">MI</div>
+    <div class="tecla" data-nota="FA">FA</div>
+  </div>
+
+  <div class="resumen" id="resumen">
+    <div class="resumen-item"><div class="n" id="c-DO">–</div><div class="l">DO</div></div>
+    <div class="resumen-item"><div class="n" id="c-RE">–</div><div class="l">RE</div></div>
+    <div class="resumen-item"><div class="n" id="c-MI">–</div><div class="l">MI</div></div>
+    <div class="resumen-item"><div class="n" id="c-FA">–</div><div class="l">FA</div></div>
+  </div>
+
+  <h2>Historial</h2>
+  <p class="h2-sub">Últimos 50 registros guardados en la base de datos</p>
+  <div class="ledger" id="ledger"></div>
+
+</div>
+
+<script>
+  // ------------------------------------------------------------
+  // CONFIGURACIÓN: apuntar a donde corre la API FastAPI
+  // ------------------------------------------------------------
+  const API_URL = "http://127.0.0.1:8000";
+
+  const puntoEstado = document.getElementById('puntoEstado');
+  const textoEstado = document.getElementById('textoEstado');
+  const ledger = document.getElementById('ledger');
+  const teclado = document.getElementById('teclado');
+
+  function formatearFecha(iso) {
+    const d = new Date(iso);
+    return d.toLocaleString('es-AR', {
+      day: '2-digit', month: '2-digit', year: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+  }
+
+  function marcarConectado(ok) {
+    puntoEstado.classList.toggle('ok', ok);
+    textoEstado.textContent = ok
+      ? "Conectado a la API — actualizando en vivo"
+      : "Sin conexión con la API (¿está corriendo uvicorn?)";
+  }
+
+  function iluminarTecla(nota) {
+    document.querySelectorAll('.tecla').forEach(t => t.classList.remove('activa'));
+    const tecla = teclado.querySelector(`[data-nota="${nota}"]`);
+    if (tecla) {
+      tecla.classList.add('activa');
+      setTimeout(() => tecla.classList.remove('activa'), 900);
+    }
+  }
+
+  let ultimaIdVista = null;
+
+  async function actualizarHistorial() {
+    try {
+      const res = await fetch(`${API_URL}/notas?limite=50`);
+      if (!res.ok) throw new Error('respuesta no ok');
+      const notas = await res.json();
+      marcarConectado(true);
+
+      if (notas.length === 0) {
+        ledger.innerHTML = `<div class="vacio">Todavía no se tocó ninguna nota.</div>`;
+        return;
+      }
+
+      // Si llegó una nota nueva desde la última vez, iluminar la tecla
+      if (ultimaIdVista !== null && notas[0].id !== ultimaIdVista) {
+        iluminarTecla(notas[0].nota);
+      }
+      ultimaIdVista = notas[0].id;
+
+      ledger.innerHTML = notas.map(n => `
+        <div class="fila">
+          <div class="nota-tag">${n.nota}</div>
+          <div>Nota tocada en el piano</div>
+          <div class="fecha">${formatearFecha(n.fecha)}</div>
+        </div>
+      `).join('');
+
+    } catch (err) {
+      marcarConectado(false);
+    }
+  }
+
+  async function actualizarResumen() {
+    try {
+      const res = await fetch(`${API_URL}/notas/resumen`);
+      if (!res.ok) return;
+      const datos = await res.json();
+      for (const nota of ['DO', 'RE', 'MI', 'FA']) {
+        document.getElementById(`c-${nota}`).textContent = datos[nota] ?? 0;
+      }
+    } catch (err) { /* silencioso: el indicador de estado ya avisa */ }
+  }
+
+  function refrescar() {
+    actualizarHistorial();
+    actualizarResumen();
+  }
+
+  refrescar();
+  setInterval(refrescar, 2500); // Poll cada 2.5s para ver notas nuevas casi en vivo
+</script>
+</body>
+</html>
